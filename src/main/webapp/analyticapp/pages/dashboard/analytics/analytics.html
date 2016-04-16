@@ -1,0 +1,42 @@
+<div class="row">
+	<div id="analyticsSuccessMessage" class="row" ng-show="analyticsMessageHandlingObject.showSuccessMessage">
+		<h5><p class="text-center text-success">{{analyticsMessageHandlingObject.message}}</p></h5>
+	</div>
+	<div id="analyticsErrorMessage" class="row" ng-show="analyticsMessageHandlingObject.showErrorMessage">
+		<h5><p class="text-center text-danger">{{analyticsMessageHandlingObject.message}}</p></h5>
+	</div>
+</div>
+<div class="row" style="padding:0px 0px 0px 10px;" ng-init="analytics={}">
+	<h3 class="page-header">Analytics Results</h3>
+	<div class="row">
+		<div class="col-lg-6" >
+			<div class="form-group row">
+				<label class="col-lg-3 control-label" for="analyticsType">Analytics</label>
+				<div class="col-lg-9">
+					<select id="analyticsType" name="analyticsType" class="form-control" ng-model="analytics.analyticsType" 
+						ng-change="" 
+						ng-options="analyticsTypesOption.value as analyticsTypesOption.displayName for analyticsTypesOption in analyticsTypesOptions">
+					</select>
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="col-lg-3 control-label" for="hosts">Hosts</label>
+				<div class="col-lg-9">
+					<select id="hosts" name="hosts" class="form-control" ng-model="analytics.host" 
+						ng-change="" 
+						ng-options="hostsOption.value as hostsOption.displayName for hostsOption in hostsOptions">
+					</select>
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="col-lg-3 control-label" for="timeframe">Timeframe</label>
+				<div class="col-lg-9">
+					<select id="timeframe" name="timeframe" class="form-control" ng-model="analytics.timeframe" 
+						ng-change="" 
+						ng-options="timeframeOption.value as timeframeOption.displayName for timeframeOption in timeframeOptions">
+					</select>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

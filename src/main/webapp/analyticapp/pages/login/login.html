@@ -1,0 +1,43 @@
+<div ng-style="{'background-image':'url(/analyticapp/img/bgimage.jpg)', 'background-size' : 'cover'}" style="height:700px; ">
+
+    <div class="container" >
+    	<form name="loginform" class="loginform" style="margin-top:150px;">
+		    <div class="row">
+		        <div class="col-md-offset-3 col-md-6">
+		            <div class="login-panel panel panel-default">
+		                <div class="panel-heading">
+		                    <h3 class="panel-title">Please Sign In</h3>
+		                </div>
+		                <div class="panel-body">
+		                        <fieldset>
+		                            <div class="form-group row" style="padding-left:15px; padding-right:15px;" ng-class="{ 'has-error' : loginform.username.$invalid && loginform.username.$dirty }">
+		                                <input type="text" name="username" class="form-control" placeholder="Username" ng-model="username" 
+	        								required autofocus>
+		                                <div class="highlight-error" ng-show="loginform.username.$dirty && loginform.username.$invalid">
+											<span ng-show="loginform.username.$error.required">Username is required.</span>
+										</div>
+		                            </div>
+		                            <div class="form-group row" style="padding-left:15px; padding-right:15px;" ng-class="{ 'has-error' : loginform.password.$invalid && loginform.password.$dirty }">
+		                                <input type="password" name="password" class="form-control" placeholder="Password" ng-model="password" 
+	        								required>
+		                                <div class="highlight-error" ng-show="loginform.password.$dirty && loginform.password.$invalid">
+											<span ng-show="loginform.password.$error.required">Password is required.</span>
+										</div>
+		                            </div>
+		                            <a ng-disabled="loginform.$invalid" class="btn btn-lg btn-success btn-block" ng-click="onClickLogin()">Login</a>
+		                            <div id="loginSuccessMessage" class="row" ng-show="loginMessageHandlingObject.showSuccessMessage">
+										<h5><p class="text-center text-success">{{loginMessageHandlingObject.message}}</p></h5>
+									</div>
+									<div id="loginErrorMessage" class="row" ng-show="loginMessageHandlingObject.showErrorMessage">
+										<h5><p class="text-center text-danger">{{loginMessageHandlingObject.message}}</p></h5>
+									</div>
+		                        </fieldset>
+		                </div>
+		            </div>
+		        </div>
+		    </div>
+		</form>
+	</div>
+    
+
+</div>

@@ -1,0 +1,18 @@
+<div class="row" style="padding: 0px 0px 0px 10px;">
+	<h3 class="page-header">User Management</h3>
+	<div ng-include="'userTableTemplate'"></div>
+</div>
+
+<!-- User table -->
+<script type="text/ng-template" id="userTableTemplate">
+	<table ng-table-dynamic="userTable.tableParams with userTable.cols" class="table table-bordered table-striped table-condensed" show-filter="true">
+		<colgroup ng-repeat="col in userTable.cols">
+          <col width="{{col.width}}" />
+        </colgroup>
+   		<tr ng-repeat="user in $data">
+       		<td ng-repeat="col in userTable.cols">
+					{{user[col.objField]}}
+       		</td>
+   		</tr>
+	</table>
+</script>

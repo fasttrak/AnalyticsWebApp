@@ -1,0 +1,14 @@
+.settings
+/build
+target/
+*.class
+*.jar
+*.war
+*.ear
+bin/
+.springBeans
+
+# Eclipse artifacts
+.classpath
+.project
+spring-*/src/main/java/META-INF/MANIFEST.MF

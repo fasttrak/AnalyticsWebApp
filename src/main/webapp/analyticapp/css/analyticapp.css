@@ -1,0 +1,87 @@
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 0px;
+}
+.footer {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 70px;
+   color: black;
+  background-color: black;
+}
+
+.container .text-muted {
+  margin: 20px 0;
+}
+
+.footer > .container {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+.highlight-error {
+	color: red;
+	font-style: italic;
+}
+.highlight-success {
+	color: lawngreen;
+	font-style: normal;
+	font: 18px arial;
+}
+
+.m-t-5{
+	margin: 5px 0px 0px 0px;
+}
+.m-b-5{
+	margin: 0px 0px 5px 0px;
+}
+.m-l-5{
+	margin: 0px 0px 0px 5px;
+}
+.m-r-5{
+	margin: 0px 5px 0px 0px;
+}
+.m-t-10{
+	margin: 10px 0px 0px 0px;
+}
+.m-b-10{
+	margin: 0px 0px 10px 0px;
+}
+.m-l-10{
+	margin: 0px 0px 0px 10px;
+}
+.m-r-10{
+	margin: 0px 10px 0px 0px;
+}
+
+.p-t-5{
+	padding: 5px 0px 0px 0px;
+}
+.p-b-5{
+	padding: 0px 0px 5px 0px;
+}
+.p-l-5{
+	padding: 0px 0px 0px 5px;
+}
+.p-r-5{
+	padding: 0px 5px 0px 0px;
+}
+.p-t-10{
+	padding: 10px 0px 0px 0px;
+}
+.p-b-10{
+	padding: 0px 0px 10px 0px;
+}
+.p-l-10{
+	padding: 0px 0px 0px 10px;
+}
+.p-r-10{
+	padding: 0px 10px 0px 0px;
+}

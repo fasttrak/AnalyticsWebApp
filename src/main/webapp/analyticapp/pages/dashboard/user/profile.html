@@ -1,0 +1,63 @@
+<div class="row" style="padding: 0px 0px 0px 10px;">
+<form name="userForm" novalidate>
+	<h3 class="page-header">User Information</h3>
+	<div class="row">
+		<div id="profileSuccessMessage" class="row" ng-show="profileMessageHandlingObject.showSuccessMessage">
+			<h5><p class="text-center text-success">{{profileMessageHandlingObject.message}}</p></h5>
+		</div>
+		<div id="profileErrorMessage" class="row" ng-show="profileMessageHandlingObject.showErrorMessage">
+			<h5><p class="text-center text-danger">{{profileMessageHandlingObject.message}}</p></h5>
+		</div>
+	</div>
+	<div class="col-lg-8" style="margin-top:20px;">
+		<div class="row pull-right" style="margin-top:20px; padding-right:40px;">
+			<a href="#" style="" class="btn btn-default" ng-click="user.isEditing=!user.isEditing"><span class="fa fa-pencil"></span></a>
+		</div>
+		<div class="row" style="padding-right:20px; margin-top:60px;">
+			<label class="col-lg-3 control-label" for="username">Username</label>
+			<div class="col-lg-9">
+				<input type="text" id="username" name="username" class="form-control" ng-model="user.username"  ng-disabled="true"/>
+			</div>
+		</div>
+		<div class="row" style="padding-right:20px; margin-top:20px;">
+			<label class="col-lg-3 control-label" for="role">Role</label>
+			<div class="col-lg-9">
+				<input type="text" id="role" name="role" class="form-control" ng-model="user.role"  ng-disabled="true"/>
+			</div>
+		</div>
+		<div class="row" style="padding-right:20px; margin-top:20px;" ng-class="{ 'has-error' : userForm.name.$invalid && userForm.name.$dirty }">
+			<label class="col-lg-3 control-label" for="name">Name</label>
+			<div class="col-lg-9">
+				<input type="text" id="name" name="name" class="form-control" ng-model="user.name" 
+					ng-disabled="!user.isEditing" required/>
+				<div class="highlight-error" ng-show="userForm.name.$dirty && userForm.name.$invalid">
+					<span ng-show="userForm.name.$error.required">Name is required.</span>
+				</div>
+			</div>
+		</div>
+		<div class="row" style="padding-right:20px; margin-top:20px;" ng-class="{ 'has-error' : userForm.role.$invalid && userForm.role.$dirty }">
+			<label class="col-lg-3 control-label" for="role">Role in Organization</label>
+			<div class="col-lg-9">
+				<input type="text" id="role" name="role" class="form-control" ng-model="user.position"  
+					ng-disabled="!user.isEditing" required/>
+				<div class="highlight-error" ng-show="userForm.role.$dirty && userForm.role.$invalid">
+					<span ng-show="userForm.role.$error.required">Role is required.</span>
+				</div>
+			</div>
+		</div>
+		<div class="row" style="padding-right:20px; margin-top:20px;">
+			<label class="col-lg-3 control-label" for="imagePath">Image URL</label>
+			<div class="col-lg-9">
+				<textarea id="imagePath" name="imagePath" rows="3" class="form-control" ng-model="user.imagePath" 
+					ng-disabled="!user.isEditing"></textarea>
+			</div>
+		</div>
+		<div class="col-lg-offset-4 col-lg-4" style="margin-top:20px;">
+			<button ng-disabled="userForm.$invalid" class="btn btn-md btn-primary btn-block" type="button" ng-click="updateUser();">Update</button>
+		</div>
+	</div>
+	<div class="col-lg-4" style="padding-right:20px; margin-top:40px;">
+		 <img style="height:250px; width:250px;" ng-src="{{user.imagePath}}" alt="{{user.name}}"/>
+	</div>
+</form>
+</div>

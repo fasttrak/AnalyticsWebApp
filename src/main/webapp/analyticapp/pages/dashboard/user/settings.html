@@ -1,0 +1,67 @@
+<div class="row" style="padding: 0px 0px 0px 10px;">
+	<form name="settingsForm" novalidate>
+		<h3 class="page-header">Settings</h3>
+		<div class="row">
+			<div id="settingsSuccessMessage" class="row" ng-show="settingsMessageHandlingObject.showSuccessMessage">
+				<h5><p class="text-center text-success">{{settingsMessageHandlingObject.message}}</p></h5>
+			</div>
+			<div id="settingsErrorMessage" class="row" ng-show="settingsMessageHandlingObject.showErrorMessage">
+				<h5><p class="text-center text-danger">{{settingsMessageHandlingObject.message}}</p></h5>
+			</div>
+		</div>
+		<div class="row" style="padding: 50px 10px 0px 10px;">
+				<accordion close-others="false" >
+	    			<accordion-group  is-open="acc.isAccOpen[0]">
+	      				<accordion-heading>	
+							<i class="pull-left glyphicon" style="cursor:pointer;" ng-class="{'glyphicon-minus': acc.isAccOpen[0], 'glyphicon-plus': !acc.isAccOpen[0]}"></i>&nbsp;Change Password
+						</accordion-heading>
+						<div ng-include="'changePasswordSection'"></div>
+	   				</accordion-group>
+	   			</accordion>
+		</div>
+	</form>
+</div>
+
+<script  type="text/ng-template" id="changePasswordSection">
+	<div class="row" style="padding-left:20px;">
+		<div class="row" style="padding-top:20px;">
+			<label class="col-lg-3 control-label" for="oldPassword">Old Password</label>
+			<div class="col-lg-4" ng-class="{ 'has-error' : settingsForm.oldPassword.$invalid && settingsForm.oldPassword.$dirty }">
+				<input type="text" id="oldPassword" name="oldPassword" class="form-control" ng-model="user.oldPassword" required/>
+				<div class="highlight-error" ng-show="settingsForm.oldPassword.$dirty && settingsForm.oldPassword.$invalid">
+					<span ng-show="settingsForm.oldPassword.$error.required">Old Password is required.</span>
+				</div>
+			</div>
+		</div>
+		<div class="row" style="padding-top:20px;">
+			<label class="col-lg-3 control-label" for="newPassword">New Password</label>
+			<div class="col-lg-4" ng-class="{ 'has-error' : settingsForm.newPassword.$invalid && settingsForm.newPassword.$dirty }">
+				<input type="text" id="newPassword" name="newPassword" class="form-control" ng-model="user.password" required/>
+				<div class="highlight-error" ng-show="settingsForm.newPassword.$dirty && settingsForm.newPassword.$invalid">
+					<span ng-show="settingsForm.newPassword.$error.required">New Password is required.</span>
+				</div>
+			</div>
+		</div>
+		<div class="row" style="padding-top:20px;">
+			<label class="col-lg-3 control-label" for="confirmPassword">Confirm New Password</label>
+			<div class="col-lg-4" ng-class="{ 'has-error' : settingsForm.confirmPassword.$invalid && settingsForm.confirmPassword.$dirty }">
+				<input type="text" id="confirmPassword" name="confirmPassword" class="form-control" ng-model="user.confirmPassword"
+					ng-blur="checkConfirmPassword(settingsForm.confirmPassword);" required/>
+				<div class="highlight-error" ng-show="settingsForm.confirmPassword.$dirty && settingsForm.confirmPassword.$invalid">
+					<span ng-show="settingsForm.confirmPassword.$error.required">Confirm Password is required.</span>
+					<span ng-show="!settingsForm.confirmPassword.$error.required && settingsForm.confirmPassword.$error.unique">
+						Password does not not match.
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="row " style="padding-top:20px;">
+			<div class="col-lg-7">
+				<div class="row col-lg-offset-3 col-lg-4">
+					<a ng-disabled="settingsForm.$invalid || settingsForm.confirmPassword.$error.unique" class="btn btn-md btn-success btn-block" 
+						ng-click="onClickChangePassword();">Change Password</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
