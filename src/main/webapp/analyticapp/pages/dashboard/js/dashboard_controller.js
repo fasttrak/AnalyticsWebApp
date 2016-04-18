@@ -20,11 +20,11 @@ angular.module('analyticApp').controller('DashboardController',
 		}
 	}
 	
-	$scope.activeTab={'analyticsTab':true, 'realTimeAnalyticsTab':false};
+	/*$scope.activeTab={'', 'analyticsTab':false, 'realTimeAnalyticsTab':false};
 	$scope.onChangeTab=function(tabName){
 		$scope.activeTab['analyticsTab']=false;
 		$scope.activeTab['realTimeAnalyticsTab']=false;
 		$scope.activeTab[tabName]=true;
-	}
+	}*/
 	
 });

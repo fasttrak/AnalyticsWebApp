@@ -8,7 +8,7 @@ angular.module('analyticApp')
       replace: true,
       scope: {
       },
-      controller:function($scope){
+      controller:function($scope, $http){
         $scope.selectedMenu = 'dashboard';
         $scope.collapseVar = 0;
         $scope.multiCollapseVar = 0;
@@ -28,6 +28,18 @@ angular.module('analyticApp')
           else
             $scope.multiCollapseVar = y;
         };
+        
+        var response = $http.get("../../webapp/group/getGroup", null, {});
+		response.success(function(data, status, headers, config) {
+			    console.log(data);
+			    $scope.accessMap=data.tabAccess;
+			    return data;
+		 });
+		 response.error(function(data, status, headers, config) {
+			 console.log(data);
+			 console.log(status);
+			 return $q.reject(response);
+		 });
       }
     }
   }]);

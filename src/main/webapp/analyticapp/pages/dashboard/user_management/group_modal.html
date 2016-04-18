@@ -1,0 +1,71 @@
+<div>
+	<div class="modal-header">
+		<h4 class="modal-title">
+				<div ng-show="operation=='view'"> <span class="glyphicon glyphicon-th"></span> Group Information</div>
+				<div ng-show="operation=='add'"> <span class="glyphicon glyphicon-th"></span> Add Group</div>
+				<div ng-show="operation=='edit'"> <span class="glyphicon glyphicon-th"></span> Edit Group</div>
+				<div ng-show="operation=='delete'"> <span class="glyphicon glyphicon-th"></span> Delete Group</div>
+			</h4>
+	</div>
+	<div class="modal-body">
+		<form name="groupForm">
+			<div class="form-group row" style="padding-left:15px; padding-right:15px;" ng-class="{ 'has-error' : groupForm.name.$invalid && groupForm.name.$dirty }">
+		         <label class="col-lg-3 control-label" for="groupname">Name</label>
+				 <div class="col-lg-9">
+					 <input type="text" name="name" class="form-control" placeholder="" ng-model="newGroup.name" ng-disabled="operation=='delete' || operation=='view'"
+	        		  	required autofocus>
+			         <div class="highlight-error" ng-show="groupForm.name.$dirty && groupForm.name.$invalid">
+						<span ng-show="groupForm.name.$error.required">Name is required.</span>
+					 </div>
+				 </div>						
+		     </div>
+		     <div class="form-group row" style="padding-left:15px; padding-right:15px;" ng-class="{ 'has-error' : groupForm.description.$invalid && groupForm.description.$dirty }">
+		         <label class="col-lg-3 control-label" for="description">Description</label>
+				 <div class="col-lg-9">
+					 <input type="text" name="description" class="form-control" placeholder="" ng-model="newGroup.description" ng-disabled="operation=='delete' || operation=='view'"
+	        		  	required autofocus>
+			         <div class="highlight-error" ng-show="groupForm.description.$dirty && groupForm.description.$invalid">
+						<span ng-show="groupForm.description.$error.required">Description is required.</span>
+					 </div>
+				 </div>						
+		     </div>
+		     <h4 class="page-header">Access List</h4>
+			 <div ng-include="'accessListTemplate'"></div>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
+		<span ng-hide="operation=='view'">
+			<button type="button" class="btn btn-primary" ng-click="save()" >
+				<div ng-show="operation=='add'">Save</div>
+				<div ng-show="operation=='edit'">Edit</div>
+				<div ng-show="operation=='delete'">Delete</div>
+			</button>
+		</span>
+	</div>
+</div>
+
+<!-- Access List table -->
+<script type="text/ng-template" id="accessListTemplate">
+	<table ng-table="accessListTable.tableParams" class="table table-bordered table-striped table-condensed">
+		<colgroup>
+          	<col width="50%" />
+          	<col width="50%" />
+        </colgroup>
+   		<tr ng-repeat="tab in $data">
+       		<td title="'Tab Name'">
+				{{tab.key}}
+     		</td>
+     		<td title="'Tab Accesss'" class="text-center">
+				<div class="btn-group" ng-show="operation=='edit' || operation=='add'">
+        			<label class="btn btn-primary" ng-model="tab.value" btn-radio="true" uncheckable>Yes</label>
+        			<label class="btn btn-primary" ng-model="tab.value" btn-radio="false" uncheckable ng-disabled="operation=='delete' ||  operation=='view'">No</label>
+    			</div>
+				<div class="btn-group" ng-show="operation=='delete' ||  operation=='view'">
+					<div ng-show="tab.value==true">Enabled</div>
+					<div ng-show="tab.value==false">Disabled</div>
+    			</div>
+ 			</td>
+   		</tr>
+	</table>
+</script>

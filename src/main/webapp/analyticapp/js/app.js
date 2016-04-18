@@ -6,6 +6,7 @@ angular
     'ui.router',
     'ui.bootstrap',
     'angular-loading-bar',
+    'dialogs.main','dialogs.default-translations',
     'analyticappServices'
   ])
   .config(['$stateProvider','$urlRouterProvider','$ocLazyLoadProvider',function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider) {
@@ -52,11 +53,6 @@ angular
                 {
                   name:'ngResource',
                   files:['bower_components/angular-1.4.4/angular-resource.js']
-                }),
-                $ocLazyLoad.load(
-                {
-                  name:'ngSanitize',
-                  files:['bower_components/angular-1.4.4/angular-sanitize.js']
                 }),
                 $ocLazyLoad.load(
                 {
@@ -143,10 +139,10 @@ angular
         }
       })
       
-      .state('dashboard.user_management',{
-        url:'/user_management',
-        controller: 'UserManagementController',
-        templateUrl:'pages/dashboard/user_management/user_management.html',
+      .state('dashboard.access_management',{
+        url:'/access_control',
+        controller: 'AccessManagementController',
+        templateUrl:'pages/dashboard/user_management/access_management.html',
         params: {
             user: null
         },
@@ -161,7 +157,9 @@ angular
               }),$ocLazyLoad.load({
               name:'analyticApp',
               files:[
-                'pages/dashboard/user_management/js/user_management_controller.js',
+                'pages/dashboard/user_management/js/access_management_controller.js',
+                'pages/dashboard/user_management/js/user_controller.js',
+                'pages/dashboard/user_management/js/group_controller.js'
               ]
             })
           }

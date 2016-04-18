@@ -57,6 +57,27 @@ public class UserBO {
 		return new ResponseEntity<User>(savedUser, HttpStatus.OK);
 	}
 
+	public ResponseEntity addUser(User user) {
+		User savedUser=null;
+		try{
+			savedUser=userDAO.addUser(user);
+		}catch(Exception e){
+			e.printStackTrace();
+			return new ResponseEntity<Exception>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<User>(savedUser, HttpStatus.OK);
+	}
+	
+	public ResponseEntity deleteUser(User user) {
+		try{
+			userDAO.deleteUser(user);
+		}catch(Exception e){
+			e.printStackTrace();
+			return new ResponseEntity<Exception>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+	}
+	
 	public ResponseEntity changeUserPassword(User user, String sessionid) {
 		try{
 			userDAO.changeUserPassword(user, Integer.parseInt(sessionid));

@@ -56,6 +56,27 @@ public class UserDAO {
 		return updatedUser;
 	}
 	
+	@CacheEvict("users")
+	public User addUser(User user)throws Exception{
+		User updatedUser=null;
+		try{
+			updatedUser=userRepository.save(user);
+		}catch(Exception e){
+			throw e;
+		}
+		return updatedUser;
+	}
+	
+	@CacheEvict("users")
+	public void deleteUser(User user)throws Exception{
+		try{
+			User savedUser=userRepository.findOne(user.getId());
+			userRepository.delete(savedUser);
+		}catch(Exception e){
+			throw e;
+		}
+	}
+	
 	@Cacheable("users")
 	public User getUserFromSessionId(Integer sessionId)throws Exception{
 		User savedUser=null;

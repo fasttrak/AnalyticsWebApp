@@ -27,7 +27,9 @@
 
 
 	<bean id="userDAO" class="com.webapp.dao.UserDAO"></bean>
+	<bean id="groupDAO" class="com.webapp.dao.GroupDAO"></bean>
 	
 	<bean id="userBO" class="com.webapp.bo.UserBO"></bean>
+	<bean id="groupBO" class="com.webapp.bo.GroupBO"></bean>
  	
 </beans>

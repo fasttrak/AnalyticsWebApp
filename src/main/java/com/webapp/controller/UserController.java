@@ -39,10 +39,21 @@ public class UserController {
 	private ResponseEntity validateLogin(@Valid @RequestBody User user, HttpServletResponse response) {
 		ResponseEntity responseEntity = userBO.validateLogin(user);
 		if(responseEntity.getStatusCode() == HttpStatus.OK){
-			response.addCookie(new Cookie("sessionid", Integer.toString(user.getSessionId())));
-			response.addCookie(new Cookie("username", user.getUsername()));
-			response.addCookie(new Cookie("id", user.getId()));
-			response.addCookie(new Cookie("role", user.getRole()));
+			Cookie sessionCookie=new Cookie("sessionid", Integer.toString(user.getSessionId()));
+			sessionCookie.setPath("/webapp");
+			response.addCookie(sessionCookie);
+			
+			Cookie usernameCookie=new Cookie("username", user.getUsername());
+			usernameCookie.setPath("/webapp");
+			response.addCookie(usernameCookie);
+			
+			Cookie idCookie=new Cookie("id", user.getId());
+			idCookie.setPath("/webapp");
+			response.addCookie(idCookie);
+			
+			Cookie roleCookie=new Cookie("role", user.getRole());
+			roleCookie.setPath("/webapp");
+			response.addCookie(roleCookie);
 		}
 		return responseEntity;
 	}
@@ -62,6 +73,20 @@ public class UserController {
 	@RequestMapping(value = "/updateUser", method = RequestMethod.POST)
 	private ResponseEntity updateUser(@RequestBody User user) {
 		ResponseEntity responseEntity = userBO.updateUser(user);
+		return responseEntity;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/addUser", method = RequestMethod.POST)
+	private ResponseEntity addUser(@RequestBody User user) {
+		ResponseEntity responseEntity = userBO.addUser(user);
+		return responseEntity;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/deleteUser", method = RequestMethod.POST)
+	private ResponseEntity deleteUser(@RequestBody User user) {
+		ResponseEntity responseEntity = userBO.deleteUser(user);
 		return responseEntity;
 	}
 	
