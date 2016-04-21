@@ -40,7 +40,19 @@ angular.module('analyticApp').controller('AccessManagementController',
 			getData: function(params){
 				var tableFilters=params.filter();
 				var tableSorts=params.sorting();
-				var paginationData={"filterParams":tableFilters,"sortingParams":tableSorts, "page":params.page(), "size": params.count()};
+				var tableFiltersList=[];
+				var tableFiltersKeys=Object.keys(tableFilters);
+				for(var i=0; i<tableFiltersKeys.length; i++){
+					tableFiltersList.push({key:tableFiltersKeys[i], valueString:tableFilters[tableFiltersKeys[i]]});
+				}
+				
+				var tableSortsList=[];
+				var tableSortsKeys=Object.keys(tableSorts);
+				for(var i=0; i<tableSortsKeys.length; i++){
+					tableSortsList.push({key:tableSortsKeys[i], valueString:tableSorts[tableSortsKeys[i]]});
+				}
+				
+				var paginationData={"filterParams":tableFiltersList,"sortingParams":tableSortsList, "page":params.page(), "size": params.count()};
 				var Api = $resource("../../webapp/user/getAllUsers");
 				return Api.save(paginationData).$promise.then(function(paginationResponseData) {
 			          params.total(paginationResponseData.totalRecords);
@@ -92,8 +104,8 @@ angular.module('analyticApp').controller('AccessManagementController',
 	function defineGroupTable(dataArray){
 		$scope.groupTable={};
 		$scope.groupTable.cols = [
-		             { field: "name",  objField:"name", title: "Name", show: true, filter: {username: 'text'}, sortable: "name", width: '40%' },
-		             { field: "description", objField:"description", title: "Description", show: true, filter: {name: 'text'}, sortable: "description", width: '40%'  },
+		             { field: "name",  objField:"name", title: "Name", show: true, filter: {name: 'text'}, sortable: "name", width: '40%' },
+		             { field: "description", objField:"description", title: "Description", show: true, filter: {description: 'text'}, sortable: "description", width: '40%'  },
 		             { title: "Action", show: true, width: '20%'  }
 		           ];
 		$scope.groupTable.tableParams = new NgTableParams({

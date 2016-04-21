@@ -16,6 +16,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
+import com.webapp.dto.MapDTO;
 import com.webapp.dto.PaginationDTO;
 import com.webapp.entity.User;
 import com.webapp.repository.UserRepository;
@@ -106,11 +107,10 @@ public class UserDAO {
 	public PaginationDTO getAllUsers(PaginationDTO paginationDTO, Set<String> validColumnNames)throws Exception{
 		PaginationDTO responsePaginationDTO=null;
 		try{
-			
 		    responsePaginationDTO=new PaginationDTO();
-		    List<User> users=getPaginationUsers(responsePaginationDTO, validColumnNames);
+		    List<User> users=getPaginationUsers(paginationDTO, validColumnNames);
 		    responsePaginationDTO.setData(users);
-		    long totalRecords=getPaginationUsersCount(responsePaginationDTO, validColumnNames);
+		    long totalRecords=getPaginationUsersCount(paginationDTO, validColumnNames);
 		    responsePaginationDTO.setTotalRecords(totalRecords);
 		}catch(Exception e){
 			throw e;
@@ -122,23 +122,23 @@ public class UserDAO {
 		List<User> users=null;
 		try{
 			Query query = new Query();
-			Map<String, String> filterMap=paginationDTO.getFilterParams();
-			if(filterMap!=null){
-				for(Entry<String, String> entry:filterMap.entrySet()){
-					if(validColumnNames.contains(entry.getKey())){
-						query.addCriteria(Criteria.where(entry.getKey()).regex(entry.getValue()));
+			List<MapDTO> filterMaps=paginationDTO.getFilterParams();
+			if(filterMaps!=null){
+				for(MapDTO mapDTO:filterMaps){
+					if(validColumnNames.contains(mapDTO.getKey())){
+						query.addCriteria(Criteria.where(mapDTO.getKey()).regex(mapDTO.getValueString()));
 					}
 				}
 			}
-			Map<String, String> sortingMap=paginationDTO.getSortingParams();
-			if(sortingMap!=null){
-				for(Entry<String, String> entry:sortingMap.entrySet()){
-					if(validColumnNames.contains(entry.getKey())){
+			List<MapDTO> sortingMaps=paginationDTO.getSortingParams();
+			if(sortingMaps!=null){
+				for(MapDTO mapDTO:sortingMaps){
+					if(validColumnNames.contains(mapDTO.getKey())){
 						Direction sortDirection=Direction.DESC;
-						if("asc".equals(entry.getValue())){
+						if("asc".equals(mapDTO.getValueString())){
 							sortDirection=Direction.ASC;
 						}
-						query.with(new Sort(new Order(sortDirection, entry.getKey())));
+						query.with(new Sort(new Order(sortDirection, mapDTO.getKey())));
 					}
 				}
 			}
@@ -155,11 +155,11 @@ public class UserDAO {
 		long usersCount=0l;
 		try{
 			Query query = new Query();
-			Map<String, String> filterMap=paginationDTO.getFilterParams();
-			if(filterMap!=null){
-				for(Entry<String, String> entry:filterMap.entrySet()){
-					if(validColumnNames.contains(entry.getKey())){
-						query.addCriteria(Criteria.where(entry.getKey()).regex(entry.getValue()));
+			List<MapDTO> filterMaps=paginationDTO.getFilterParams();
+			if(filterMaps!=null){
+				for(MapDTO mapDTO:filterMaps){
+					if(validColumnNames.contains(mapDTO.getKey())){
+						query.addCriteria(Criteria.where(mapDTO.getKey()).regex(mapDTO.getValueString()));
 					}
 				}
 			}

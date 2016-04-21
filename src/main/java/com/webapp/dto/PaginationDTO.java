@@ -1,5 +1,6 @@
 package com.webapp.dto;
 
+import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -10,8 +11,9 @@ public class PaginationDTO {
 	private int size;
 	private int page;
 	private long totalRecords;
-	private Map<String, String> filterParams;
-	private Map<String, String> sortingParams;
+	private List<MapDTO> filterParams;
+	private List<MapDTO> sortingParams;
+	
 	private Object data;
 	
 	public int getSize() {
@@ -32,16 +34,16 @@ public class PaginationDTO {
 	public void setTotalRecords(long totalRecords) {
 		this.totalRecords = totalRecords;
 	}
-	public Map<String, String> getFilterParams() {
+	public List<MapDTO> getFilterParams() {
 		return filterParams;
 	}
-	public void setFilterParams(Map<String, String> filterParams) {
+	public void setFilterParams(List<MapDTO> filterParams) {
 		this.filterParams = filterParams;
 	}
-	public Map<String, String> getSortingParams() {
+	public List<MapDTO> getSortingParams() {
 		return sortingParams;
 	}
-	public void setSortingParams(Map<String, String> sortingParams) {
+	public void setSortingParams(List<MapDTO> sortingParams) {
 		this.sortingParams = sortingParams;
 	}
 	public Object getData() {

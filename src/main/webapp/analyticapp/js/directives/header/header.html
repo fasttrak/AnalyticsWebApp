@@ -8,10 +8,10 @@
 	            <span class="icon-bar"></span>
 	            <span class="icon-bar"></span>
 	        </button>
-	        <a class="navbar-brand" href="index.html">SB Admin v2.0</a>
+	        <a class="navbar-brand" ui-sref=".home">Analytic App</a>
 	    </div>
 	    <ul class="nav navbar-top-links navbar-right">
-		    <li class="dropdown">
+		    <!-- <li class="dropdown">
 		        <a class="dropdown-toggle" data-toggle="dropdown">
 		            <i class="fa fa-envelope fa-fw"></i>  <i class="fa fa-caret-down"></i>
 		        </a>
@@ -59,61 +59,61 @@
 		                </a>
 		            </li>
 		        </ul>
-		        <!-- /.dropdown-messages -->
-		    </li>
+		        /.dropdown-messages
+		    </li> -->
 		    <!-- /.dropdown -->
 		    <li class="dropdown">
 		        <a class="dropdown-toggle" data-toggle="dropdown">
 		            <i class="fa fa-bell fa-fw"></i>  <i class="fa fa-caret-down"></i>
 		        </a>
 		        <ul class="dropdown-menu dropdown-alerts">
-		            <li>
+		            <li ng-show="topAlerts[0]!=null">
 		                <a href="#">
 		                    <div>
-		                        <i class="fa fa-comment fa-fw"></i> New Comment
-		                        <span class="pull-right text-muted small">4 minutes ago</span>
+		                        <i class="fa fa-bell fa-fw"></i> {{topAlerts[0].type}}
+		                        <span class="pull-right text-muted small">{{ topAlerts[0].createDateTime | datetime }}</span>
 		                    </div>
 		                </a>
 		            </li>
-		            <li class="divider"></li>
-		            <li>
+		            <li class="divider" ng-show="topAlerts[0]!=null"></li>
+		            <li ng-show="topAlerts[1]!=null">
 		                <a href="#">
 		                    <div>
-		                        <i class="fa fa-twitter fa-fw"></i> 3 New Followers
-		                        <span class="pull-right text-muted small">12 minutes ago</span>
+		                        <i class="fa fa-bell fa-fw"></i> {{topAlerts[1].type}}
+		                        <span class="pull-right text-muted small">{{ topAlerts[1].createDateTime | datetime }}</span>
 		                    </div>
 		                </a>
 		            </li>
-		            <li class="divider"></li>
-		            <li>
+		            <li class="divider" ng-show="topAlerts[1]!=null"></li>
+		            <li ng-show="topAlerts[2]!=null">
 		                <a href="#">
 		                    <div>
-		                        <i class="fa fa-envelope fa-fw"></i> Message Sent
-		                        <span class="pull-right text-muted small">4 minutes ago</span>
+		                        <i class="fa fa-bell fa-fw"></i> {{topAlerts[2].type}}
+		                        <span class="pull-right text-muted small">{{ topAlerts[2].createDateTime | datetime }}</span>
 		                    </div>
 		                </a>
 		            </li>
-		            <li class="divider"></li>
-		            <li>
+		            <li class="divider" ng-show="topAlerts[2]!=null"></li>
+		            <li ng-show="topAlerts[3]!=null">
 		                <a href="#">
 		                    <div>
-		                        <i class="fa fa-tasks fa-fw"></i> New Task
-		                        <span class="pull-right text-muted small">4 minutes ago</span>
+		                        <i class="fa fa-bell fa-fw"></i> {{topAlerts[3].type}}
+		                        <span class="pull-right text-muted small">{{ topAlerts[3].createDateTime | datetime }}</span>
 		                    </div>
 		                </a>
 		            </li>
-		            <li class="divider"></li>
-		            <li>
+		            <li class="divider" ng-show="topAlerts[0]!=null"></li>
+		            <li ng-show="topAlerts[4]!=null">
 		                <a href="#">
 		                    <div>
-		                        <i class="fa fa-upload fa-fw"></i> Server Rebooted
-		                        <span class="pull-right text-muted small">4 minutes ago</span>
+		                        <i class="fa fa-bell fa-fw"></i> {{topAlerts[4].type}}
+		                        <span class="pull-right text-muted small">{{ topAlerts[4].createDateTime | datetime }}</span>
 		                    </div>
 		                </a>
 		            </li>
-		            <li class="divider"></li>
+		            <li class="divider" ng-show="topAlerts[4]!=null"></li>
 		            <li>
-		                <a class="text-center" href="#">
+		                <a class="text-center" ui-sref=".alert">
 		                    <strong>See All Alerts</strong>
 		                    <i class="fa fa-angle-right"></i>
 		                </a>
@@ -129,7 +129,6 @@
 		            </li>
 		            <li><a ui-sref=".settings"><i class="fa fa-gear fa-fw"></i> Settings</a>
 		            </li>
-		            <li><a href="http://www.strapui.com/"><i class="fa fa-eye fa-fw"></i> Premium Angular Themes</a></li>
 		            <li class="divider"></li>
 		            <li><a ui-sref="login"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
 		            </li>

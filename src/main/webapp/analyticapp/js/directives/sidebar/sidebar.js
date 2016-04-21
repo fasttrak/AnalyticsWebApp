@@ -38,7 +38,7 @@ angular.module('analyticApp')
 		 response.error(function(data, status, headers, config) {
 			 console.log(data);
 			 console.log(status);
-			 return $q.reject(response);
+			 return ;
 		 });
       }
     }

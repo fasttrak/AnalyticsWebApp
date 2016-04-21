@@ -4,6 +4,7 @@ public class MapDTO {
 
 	private String key;
 	private boolean value;
+	private String valueString;
 	
 	public String getKey() {
 		return key;
@@ -17,5 +18,10 @@ public class MapDTO {
 	public void setValue(boolean value) {
 		this.value = value;
 	}
-	
+	public String getValueString() {
+		return valueString;
+	}
+	public void setValueString(String valueString) {
+		this.valueString = valueString;
+	}
 }

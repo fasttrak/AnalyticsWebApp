@@ -28,8 +28,12 @@
 
 	<bean id="userDAO" class="com.webapp.dao.UserDAO"></bean>
 	<bean id="groupDAO" class="com.webapp.dao.GroupDAO"></bean>
+	<bean id="alertDAO" class="com.webapp.dao.AlertDAO"></bean>
+	<bean id="analyticDAO" class="com.webapp.dao.AnalyticDAO"></bean>
 	
 	<bean id="userBO" class="com.webapp.bo.UserBO"></bean>
 	<bean id="groupBO" class="com.webapp.bo.GroupBO"></bean>
+	<bean id="alertBO" class="com.webapp.bo.AlertBO"></bean>
+	<bean id="analyticBO" class="com.webapp.bo.AnalyticBO"></bean>
  	
 </beans>

@@ -15,6 +15,7 @@
 				<div class="col-lg-9">
 					<select id="analyticsType" name="analyticsType" class="form-control" ng-model="analytics.analyticsType" 
 						ng-change="" 
+						ng-model="selectedAnalyticsType"
 						ng-options="analyticsTypesOption.value as analyticsTypesOption.displayName for analyticsTypesOption in analyticsTypesOptions">
 					</select>
 				</div>
@@ -24,6 +25,7 @@
 				<div class="col-lg-9">
 					<select id="hosts" name="hosts" class="form-control" ng-model="analytics.host" 
 						ng-change="" 
+						ng-model="selectedHost"
 						ng-options="hostsOption.value as hostsOption.displayName for hostsOption in hostsOptions">
 					</select>
 				</div>
@@ -33,10 +35,19 @@
 				<div class="col-lg-9">
 					<select id="timeframe" name="timeframe" class="form-control" ng-model="analytics.timeframe" 
 						ng-change="" 
+						ng-model="selectedTimeFrame"
 						ng-options="timeframeOption.value as timeframeOption.displayName for timeframeOption in timeframeOptions">
 					</select>
 				</div>
 			</div>
 		</div>
 	</div>
+</div>
+<div class="row" >
+    <div class="span9" style="height:400px; width:800px;">
+        <div class="row">
+            <highchart class="chart" config="chartConfig" class="span9" ></highchart>
+        </div>
+
+    </div>
 </div>

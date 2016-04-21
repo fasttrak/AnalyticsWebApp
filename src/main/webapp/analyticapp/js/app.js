@@ -7,7 +7,8 @@ angular
     'ui.bootstrap',
     'angular-loading-bar',
     'dialogs.main','dialogs.default-translations',
-    'analyticappServices'
+    'analyticappServices',
+    'highcharts-ng'
   ])
   .config(['$stateProvider','$urlRouterProvider','$ocLazyLoadProvider',function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider) {
     
@@ -91,11 +92,11 @@ angular
         resolve: {
           loadMyFiles:function($ocLazyLoad) {
             return $ocLazyLoad.load({
-              name:'analyticApp',
-              files:[
-              'pages/dashboard/analytics/js/analytics_controller.js',
-              ]
-            })
+                name:'analyticApp',
+                files:[
+                'pages/dashboard/analytics/js/analytics_controller.js',
+                ]
+              })
           }
         }
       })
@@ -165,6 +166,32 @@ angular
           }
         }
       })
+      
+      .state('dashboard.alert',{
+        url:'/alert',
+        controller: 'AlertController',
+        templateUrl:'pages/dashboard/alert/alert.html',
+        params: {
+            user: null
+        },
+        resolve: {
+          loadMyFiles:function($ocLazyLoad) {
+            return $ocLazyLoad.load({
+                name:'ngTable',
+                files:[
+                  'bower_components/ngtable/ng-table.js',
+                  'bower_components/ngtable/ng-table.css'
+                ]
+              }),$ocLazyLoad.load({
+              name:'analyticApp',
+              files:[
+                'pages/dashboard/alert/js/alert_controller.js',
+              ]
+            })
+          }
+        }
+      })
+      
       
       .state('dashboard.form',{
         templateUrl:'views/form.html',
@@ -238,5 +265,6 @@ angular
        url:'/grid'
    })
   }]);
+
 
     
