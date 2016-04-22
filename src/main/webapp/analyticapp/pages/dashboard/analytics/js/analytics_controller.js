@@ -4,6 +4,7 @@ angular.module('analyticApp').controller('AnalyticsController',
 
 	initController();
 	function initController(){
+		$scope.analytics={};
 		$scope.analyticsMessageHandlingObject = {
     			showSuccessMessage:false,
     			successMessageDivId:'analyticsSuccessMessage',
@@ -25,13 +26,22 @@ angular.module('analyticApp').controller('AnalyticsController',
 		});
 	}
 	
-	 function getNextTimeSlots(noOfSlots, daysToAdd){
+	 function getNextTimeSlots(noOfSlots, noToAdd, parameter){
 		 var nextTimeSlots=[];
 		 var currentDate=new Date();
-		 for(var i=1; i<=noOfSlots; i++){
-			 currentDate.setDate(currentDate.getDate() + daysToAdd); 
-			 nextTimeSlots.push($filter('date')(currentDate));
+		 if(parameter=='day'){
+			 for(var i=1; i<=noOfSlots; i++){
+				 currentDate.setDate(currentDate.getDate() + noToAdd); 
+				 nextTimeSlots.push($filter('date')(currentDate, "MM/dd/yyyy 'at' h:mma"));
+			 }
+		 }else{
+			 //hour
+			 for(var i=1; i<=noOfSlots; i++){
+				 currentDate.setHours(currentDate.getHours() + noToAdd); 
+				 nextTimeSlots.push($filter('date')(currentDate, "MM/dd/yyyy 'at' h:mma"));
+			 }
 		 }
+		
 		 return nextTimeSlots;
 	 }
 	
@@ -54,21 +64,21 @@ angular.module('analyticApp').controller('AnalyticsController',
 	 }
 	 
 	 function initializeAnalytics(){
-			$scope.analyticsTypesOptions=[{value:'cpu_utilization', displayName:'CPU Utilization', selected:true},
+			$scope.analyticsTypesOptions=[{value:'cpu_utilization', displayName:'CPU Utilization'},
 			                              {value:'memory_utilization', displayName:'Memory Utilization'}];
-			$scope.selectedAnalyticsType='cpu_utilization';
+			$scope.analytics.selectedAnalyticsType='cpu_utilization';
 			$scope.hostsOptions=[];
 			$scope.hostsOptions.push({value: 'all', displayName: 'All Hosts'});
-			$scope.selectedHost='all';
+			$scope.analytics.selectedHost='all';
 			for(var i=0; i<$scope.analytics.length; i++){
 				 var analytic=$scope.analytics[i];
 				 $scope.hostsOptions.push({value: analytic.ip, displayName: analytic.ip});
 			}
-			$scope.timeframeOptions=[{value:'one_hour', displayName:'One Hour'},
-				                     	{value:'one_day', displayName:'One Day'},
-				                     	{value:'one_month', displayName:'One Month'}];
-			$scope.selectedTimeFrame='one_hour';	
-			var nextTimeSlots=getNextTimeSlots(10, 1);
+			$scope.timeframeOptions=[{value:'one_hour', displayName:'One Hour'}
+				                     	,{value:'one_day', displayName:'One Day'}
+				                     	/*,{value:'one_month', displayName:'One Month'}*/];
+			$scope.analytics.selectedTimeFrame='one_hour';	
+			var nextTimeSlots=getNextTimeSlots(10, 1, 'hour');
 			var dataSeriesList=[];
 			for(var i=0; i<$scope.hostsOptions.length; i++){
 				if($scope.hostsOptions[i].value=='all'){
@@ -78,11 +88,11 @@ angular.module('analyticApp').controller('AnalyticsController',
 						$scope.hostsOptions[i].value,$scope.analytics);
 				dataSeriesList.push(dataSeriesObj);
 			}
-			configureGraph('CPU Analytics', nextTimeSlots, 'CPU Utilization', '%', dataSeriesList);
+			configureLineGraph('CPU Analytics', nextTimeSlots, 'CPU Utilization', '(%)', dataSeriesList);
 		 }
 	 
 	 //graphTitle=String, nextTimeSlots([String], yAxisText=String, yAxisSuffix=String(%), dataSeries=[{name:String, data:[float]}])
-	 function configureGraph(graphTitle, nextTimeSlots, yAxisText, yAxisSuffix, dataSeries){
+	 function configureLineGraph(graphTitle, nextTimeSlots, yAxisText, yAxisSuffix, dataSeries){
 		 $scope.chartConfig = {
 			        title: {
 			            text: graphTitle,
@@ -117,5 +127,69 @@ angular.module('analyticApp').controller('AnalyticsController',
 			        series: dataSeries
 		 };
 	 }
+	
+	 $scope.onClickVisualize=function(){
+		 var interceptString=null;
+		 var slopeString=null;
+		 var noToAdd=1;
+		 var parameter='hour';
+		 if($scope.analytics.selectedAnalyticsType=='cpu_utilization'){
+			 if($scope.analytics.selectedTimeFrame=='one_hour'){
+				 noToAdd=1;
+				 parameter='hour';
+				 interceptString='oneHourCPUAnalyticsIntercept';
+				 slopeString='oneHourCPUAnalyticsSlope';
+			 }else if($scope.analytics.selectedTimeFrame=='one_day'){
+				 noToAdd=1;
+				 parameter='day';
+				 interceptString='oneDayCPUAnalyticsIntercept';
+				 slopeString='oneDayCPUAnalyticsSlope';
+			 }else if($scope.analytics.selectedTimeFrame=='one_month'){
+				 noToAdd=30;
+				 parameter='day';
+				 interceptString='oneMonthCPUAnalyticsIntercept';
+				 slopeString='oneMonthCPUAnalyticsSlope';
+			 }
+		 }else if($scope.analytics.selectedAnalyticsType=='memory_utilization'){
+			 if($scope.analytics.selectedTimeFrame=='one_hour'){
+				 noToAdd=1;
+				 parameter='hour';
+				 interceptString='oneHourMemoryAnalyticsIntercept';
+				 slopeString='oneHourMemoryAnalyticsSlope';
+			 }else if($scope.analytics.selectedTimeFrame=='one_day'){
+				 noToAdd=1;
+				 parameter='day';
+				 interceptString='oneDayMemoryAnalyticsIntercept';
+				 slopeString='oneDayMemoryAnalyticsSlope';
+			 }else if($scope.analytics.selectedTimeFrame=='one_month'){
+				 noToAdd=30;
+				 parameter='day';
+				 interceptString='oneMonthMemoryAnalyticsIntercept';
+				 slopeString='oneMonthMemoryAnalyticsSlope';
+			 }
+		 }
+		 var dataSeriesList=[];
+		 if($scope.analytics.selectedHost=='all'){
+				for(var i=0; i<$scope.hostsOptions.length; i++){
+					if($scope.hostsOptions[i].value=='all'){
+						continue;
+					}
+					var dataSeriesObj=getDataSeries(10, $scope.hostsOptions[i].value, interceptString, slopeString, 
+							$scope.hostsOptions[i].value,$scope.analytics);
+					dataSeriesList.push(dataSeriesObj);
+				}
+		 }else{
+			 for(var i=0; i<$scope.hostsOptions.length; i++){
+					if($scope.hostsOptions[i].value==$scope.analytics.selectedHost){
+						var dataSeriesObj=getDataSeries(10, $scope.hostsOptions[i].value, interceptString, slopeString, 
+								$scope.hostsOptions[i].value,$scope.analytics);
+						dataSeriesList.push(dataSeriesObj);
+					}
+			}
+		 }
+		 var nextTimeSlots=getNextTimeSlots(10, noToAdd, parameter);
+		 configureLineGraph('CPU Analytics', nextTimeSlots, 'CPU Utilization', '(%)', dataSeriesList);
+	 } 
+	 
 	
 });

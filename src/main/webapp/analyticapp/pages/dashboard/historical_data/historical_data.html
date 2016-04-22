@@ -1,0 +1,120 @@
+<div class="row" style="padding: 0px 0px 0px 10px;">
+	<div class="panel">
+		<div class="panel-body">
+			<h3 class="page-header">Historical Data</h3>
+			<div ng-include="'historicalDataMessageTemplate'"></div>
+			<div ng-include="'historicalDataFormTemplate'"></div>
+		</div>
+	</div>
+</div>
+
+<script type="text/ng-template" id="historicalDataMessageTemplate">
+	<div class="row">
+		<div id="historicalDataSuccessMessage" class="row" ng-show="historicalDataMessageHandlingObject.showSuccessMessage">
+			<h5><p class="text-center text-success">{{historicalDataMessageHandlingObject.message}}</p></h5>
+		</div>
+		<div id="historicalDataErrorMessage" class="row" ng-show="historicalDataMessageHandlingObject.showErrorMessage">
+			<h5><p class="text-center text-danger">{{historicalDataMessageHandlingObject.message}}</p></h5>
+		</div>
+	</div>
+</script>
+
+<script type="text/ng-template" id="historicalDataFormTemplate">
+	<div class="row" style="padding:0px 0px 0px 10px;" >
+		<div class="row">
+			<div class="col-lg-6" >
+				<div class="form-group row">
+					<label class="col-lg-3 control-label" for="analyticsType">Analytics</label>
+					<div class="col-lg-9">
+						<select id="analyticsType" name="analyticsType" class="form-control"  
+							ng-model="historicalData.type">
+							<option ng-repeat="analyticsTypesOption in analyticsTypesOptions track by $index"
+									value="{{analyticsTypesOptions[$index].value}}" 
+									ng-selected="analyticsTypesOptions[$index].value==analytics.selectedAnalyticsType">
+								{{analyticsTypesOptions[$index].displayName}}
+							</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-lg-3 control-label" for="hosts">Hosts</label>
+					<div class="col-lg-9">
+						<select id="hosts" name="hosts" class="form-control"
+							ng-model="historicalData.ip">
+							<option ng-repeat="hostsOption in hostsOptions track by $index"
+									value="{{hostsOptions[$index].value}}" 
+									ng-selected="hostsOptions[$index].value==analytics.selectedHost">
+								{{hostsOptions[$index].displayName}}
+							</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-lg-3 control-label" for="startDate">Start Date</label>
+					<div class="col-lg-9">
+						<p class="input-group">
+			            	<input type="text" class="form-control"
+								name="startDate"
+			              		is-open="startDate.opened"
+			              		ng-model="historicalData.startDate"
+								datepicker-popup="dd-MMMM-yyyy"
+								datepicker-options="startDateOptions"
+								close-text="Close" 
+								id="startDate"
+								ng-click="open($event,'StartDate')" /> 
+							<span class="input-group-btn">
+								<button type="button" class="btn btn-default"
+									ng-click="open($event, 'StartDate')"
+									ng-disabled="$parent.isReadOnlyView">
+								<i class="glyphicon glyphicon-calendar"></i>
+								</button>
+							</span>
+			            </p>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-lg-3 control-label" for="startDate">End Date</label>
+					<div class="col-lg-9">
+						<p class="input-group">
+			            	<input type="text" class="form-control"
+								name="endDate"
+			              		is-open="endDate.opened"
+			              		ng-model="historicalData.endDate"
+								datepicker-popup="dd-MMMM-yyyy"
+								datepicker-options="endDateOptions"
+								close-text="Close" 
+								id="endDate"
+								ng-click="open($event,'EndDate')" /> 
+							<span class="input-group-btn">
+								<button type="button" class="btn btn-default"
+									ng-click="open($event, 'EndDate')"
+									ng-disabled="$parent.isReadOnlyView">
+								<i class="glyphicon glyphicon-calendar"></i>
+								</button>
+							</span>
+			            </p>
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-lg-4"></div>
+					<div class="col-lg-4">
+						<button class="btn btn-md btn-primary btn-block" type="button" ng-click="onClickVisualize();">Visualize</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div ng-include="'historicalDataAreaGraphTemplate'"></div>
+</script>
+
+<script type="text/ng-template" id="historicalDataAreaGraphTemplate">
+	<div class="row" style="padding: 20px 0px 20px 0px;" ng-show="historicalData.showGraph">
+		<div class="col-lg-1"></div>
+	    <div class="span9 col-lg-8" style="height:600px;">
+	        <div class="row">
+	            <highchart class="chart" config="chartConfig" class="span9" ></highchart>
+	        </div>
+	    </div>
+	</div>
+</script>

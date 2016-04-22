@@ -16,6 +16,7 @@ public class Analytic {
 	@Field(value="ip")
     private String ip;
 	
+	//cpu utilization
 	@Field(value="one_hour_cpu_analytics_intercept")
 	private Double oneHourCPUAnalyticsIntercept;
 	
@@ -23,16 +24,35 @@ public class Analytic {
 	private Double oneHourCPUAnalyticsSlope;
 	
 	@Field(value="one_day_cpu_analytics_intercept")
-	private Double oneWeekCPUAnalyticsIntercept;
+	private Double oneDayCPUAnalyticsIntercept;
 	
 	@Field(value="one_day_cpu_analytics_slope")
-	private Double oneWeekCPUAnalyticsSlope;
+	private Double oneDayCPUAnalyticsSlope;
 	
 	@Field(value="one_month_cpu_analytics_intercept")
 	private Double oneMonthCPUAnalyticsIntercept;
 	
 	@Field(value="one_month_cpu_analytics_slope")
 	private Double oneMonthCPUAnalyticsSlope;
+	
+	//memory utilization
+	@Field(value="one_hour_memory_analytics_intercept")
+	private Double oneHourMemoryAnalyticsIntercept;
+	
+	@Field(value="one_hour_memory_analytics_slope")
+	private Double oneHourMemoryAnalyticsSlope;
+	
+	@Field(value="one_day_memory_analytics_intercept")
+	private Double oneDayMemoryAnalyticsIntercept;
+	
+	@Field(value="one_day_memory_analytics_slope")
+	private Double oneDayMemoryAnalyticsSlope;
+	
+	@Field(value="one_month_memory_analytics_intercept")
+	private Double oneMonthMemoryAnalyticsIntercept;
+	
+	@Field(value="one_month_memory_analytics_slope")
+	private Double oneMonthMemoryAnalyticsSlope;
 
 	public String getId() {
 		return id;
@@ -66,20 +86,20 @@ public class Analytic {
 		this.oneHourCPUAnalyticsSlope = oneHourCPUAnalyticsSlope;
 	}
 
-	public Double getOneWeekCPUAnalyticsIntercept() {
-		return oneWeekCPUAnalyticsIntercept;
+	public Double getOneDayCPUAnalyticsIntercept() {
+		return oneDayCPUAnalyticsIntercept;
 	}
 
-	public void setOneWeekCPUAnalyticsIntercept(Double oneWeekCPUAnalyticsIntercept) {
-		this.oneWeekCPUAnalyticsIntercept = oneWeekCPUAnalyticsIntercept;
+	public void setOneDayCPUAnalyticsIntercept(Double oneDayCPUAnalyticsIntercept) {
+		this.oneDayCPUAnalyticsIntercept = oneDayCPUAnalyticsIntercept;
 	}
 
-	public Double getOneWeekCPUAnalyticsSlope() {
-		return oneWeekCPUAnalyticsSlope;
+	public Double getOneDayCPUAnalyticsSlope() {
+		return oneDayCPUAnalyticsSlope;
 	}
 
-	public void setOneWeekCPUAnalyticsSlope(Double oneWeekCPUAnalyticsSlope) {
-		this.oneWeekCPUAnalyticsSlope = oneWeekCPUAnalyticsSlope;
+	public void setOneDayCPUAnalyticsSlope(Double oneDayCPUAnalyticsSlope) {
+		this.oneDayCPUAnalyticsSlope = oneDayCPUAnalyticsSlope;
 	}
 
 	public Double getOneMonthCPUAnalyticsIntercept() {
@@ -96,6 +116,54 @@ public class Analytic {
 
 	public void setOneMonthCPUAnalyticsSlope(Double oneMonthCPUAnalyticsSlope) {
 		this.oneMonthCPUAnalyticsSlope = oneMonthCPUAnalyticsSlope;
+	}
+
+	public Double getOneHourMemoryAnalyticsIntercept() {
+		return oneHourMemoryAnalyticsIntercept;
+	}
+
+	public void setOneHourMemoryAnalyticsIntercept(Double oneHourMemoryAnalyticsIntercept) {
+		this.oneHourMemoryAnalyticsIntercept = oneHourMemoryAnalyticsIntercept;
+	}
+
+	public Double getOneHourMemoryAnalyticsSlope() {
+		return oneHourMemoryAnalyticsSlope;
+	}
+
+	public void setOneHourMemoryAnalyticsSlope(Double oneHourMemoryAnalyticsSlope) {
+		this.oneHourMemoryAnalyticsSlope = oneHourMemoryAnalyticsSlope;
+	}
+
+	public Double getOneDayMemoryAnalyticsIntercept() {
+		return oneDayMemoryAnalyticsIntercept;
+	}
+
+	public void setOneDayMemoryAnalyticsIntercept(Double oneDayMemoryAnalyticsIntercept) {
+		this.oneDayMemoryAnalyticsIntercept = oneDayMemoryAnalyticsIntercept;
+	}
+
+	public Double getOneDayMemoryAnalyticsSlope() {
+		return oneDayMemoryAnalyticsSlope;
+	}
+
+	public void setOneDayMemoryAnalyticsSlope(Double oneDayMemoryAnalyticsSlope) {
+		this.oneDayMemoryAnalyticsSlope = oneDayMemoryAnalyticsSlope;
+	}
+
+	public Double getOneMonthMemoryAnalyticsIntercept() {
+		return oneMonthMemoryAnalyticsIntercept;
+	}
+
+	public void setOneMonthMemoryAnalyticsIntercept(Double oneMonthMemoryAnalyticsIntercept) {
+		this.oneMonthMemoryAnalyticsIntercept = oneMonthMemoryAnalyticsIntercept;
+	}
+
+	public Double getOneMonthMemoryAnalyticsSlope() {
+		return oneMonthMemoryAnalyticsSlope;
+	}
+
+	public void setOneMonthMemoryAnalyticsSlope(Double oneMonthMemoryAnalyticsSlope) {
+		this.oneMonthMemoryAnalyticsSlope = oneMonthMemoryAnalyticsSlope;
 	}
 
 }

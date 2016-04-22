@@ -186,6 +186,32 @@ angular
               name:'analyticApp',
               files:[
                 'pages/dashboard/alert/js/alert_controller.js',
+                'pages/dashboard/alert/js/alert_configure_controller.js'
+              ]
+            })
+          }
+        }
+      })
+      
+      .state('dashboard.historicaldata',{
+        url:'/historical',
+        controller: 'HistoricalDataController',
+        templateUrl:'pages/dashboard/historical_data/historical_data.html',
+        params: {
+            user: null
+        },
+        resolve: {
+          loadMyFiles:function($ocLazyLoad) {
+            return $ocLazyLoad.load({
+                name:'ngTable',
+                files:[
+                  'bower_components/ngtable/ng-table.js',
+                  'bower_components/ngtable/ng-table.css'
+                ]
+              }),$ocLazyLoad.load({
+              name:'analyticApp',
+              files:[
+                'pages/dashboard/historical_data/js/historical_data_controller.js',
               ]
             })
           }

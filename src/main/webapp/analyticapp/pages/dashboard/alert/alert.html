@@ -3,6 +3,7 @@
 		<div class="panel-body">
 			<h3 class="page-header">Alerts</h3>
 			<div ng-include="'alertMessageTemplate'"></div>
+			<div class="pull-right" style="margin: 10px 0px 10px 0px;"><button class="btn btn-default btn-md" ng-click="configureAlert();" ><span class="fa fa-cog fa-lg"></span></button></div>
 			<div ng-include="'alertTableTemplate'"></div>
 			<div ng-hide="hideAlertInformation">
 				<div ng-include="'alertInformationTemplate'"></div>
@@ -55,7 +56,7 @@
 	     <div class="form-group row" style="padding-left:15px; padding-right:15px;" >
 	         <label class="col-lg-3 control-label" for="alertMessage">Alert Message</label>
 			 <div class="col-lg-5">
-				 <textarea type="text" name="alertType" class="form-control" placeholder="" ng-model="alertToUpdate.type"  ng-disabled="true" >
+				 <textarea type="text" name="alertType" class="form-control" placeholder="" ng-model="alertToUpdate.message"  ng-disabled="true" >
 				 </textarea>
 			 </div>						
 	     </div>

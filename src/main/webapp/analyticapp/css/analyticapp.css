@@ -85,6 +85,7 @@ body {
 .p-r-10{
 	padding: 0px 10px 0px 0px;
 }
+
 .chart .highcharts-tooltip > span{ width: 175px;float: left; margin: 0 }
         .chart .highcharts-tooltip .header{ font-weight: bold; width: 154px!important; height: auto!important; float: left; border-bottom: 1px solid #bebebe;  margin: 1px 0 5px 1px!important; padding: 5px 10px;background-color: rgba(255,255,255,1);
             -webkit-border-top-left-radius: 5px;

@@ -20,7 +20,7 @@ angular.module('analyticApp').controller('AlertController',
 		$scope.alertTable={};
 		$scope.alertTable.cols = [
 		             { field: "type",  objField:"type", title: "Type", show: true, filter: {type: 'text'}, sortable: "type", width: '20%' },
-		             { field: "message",  objField:"message", title: "Message", show: true, filter: {username: 'text'}, sortable: "message", width: '20%' },
+		             { field: "assignedTo",  objField:"assignedTo", title: "Assigned to", show: true, filter: {assignedTo: 'text'}, sortable: "assignedTo", width: '20%' },
 		             { field: "description",  objField:"description", title: "Description", show: true, filter: {description: 'text'}, sortable: "description", width: '20%' },
 		             { field: "createDateTime", objField:"createDateTime", title: "Detected On", show: true, sortable: "createDateTime", width: '15%'  },
 		             { title: "Action", show: true, width: '5%'  }
@@ -124,5 +124,25 @@ angular.module('analyticApp').controller('AlertController',
 					 "Technical error has occured. Please contact system administrator.");
 			return $q.reject(response);
 		 });
+	 }
+	 
+	 $scope.configureAlert=function(){
+		 var dialog=dialogs.create('pages/dashboard/alert/alert_configure.html','AlertConfigureController',{},{},'md');
+			dialog.result.then(function(success){
+				//called when user click save/edit/delete button
+				if(success){
+					data=success;
+					successAndErrorMessageHandlingService.handleSuccessAndErrorMessage(data, $scope.alertMessageHandlingObject, 
+							"Alert threshold configuration updated successfully",
+							"Technical error has occured. Please contact system administrator.");
+				}else{
+					data.isError=true;
+					successAndErrorMessageHandlingService.handleSuccessAndErrorMessage(data, $scope.alertMessageHandlingObject, 
+							 "Alert threshold configuration updated successfully",
+							 "Technical error has occured. Please contact system administrator.");
+				}
+			},function(btn){
+				//called when user click cancel button
+		});
 	 }
 });

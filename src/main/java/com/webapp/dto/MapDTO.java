@@ -1,10 +1,14 @@
 package com.webapp.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class MapDTO {
 
 	private String key;
 	private boolean value;
 	private String valueString;
+	private Integer intString;
 	
 	public String getKey() {
 		return key;
@@ -24,4 +28,11 @@ public class MapDTO {
 	public void setValueString(String valueString) {
 		this.valueString = valueString;
 	}
+	public Integer getIntString() {
+		return intString;
+	}
+	public void setIntString(Integer intString) {
+		this.intString = intString;
+	}
+	
 }

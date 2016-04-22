@@ -1,5 +1,6 @@
 package com.webapp.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.webapp.bo.AlertBO;
 import com.webapp.bo.UserBO;
+import com.webapp.dto.MapDTO;
 import com.webapp.dto.PaginationDTO;
 import com.webapp.entity.Alert;
 import com.webapp.util.WebAppUtil;
@@ -54,5 +56,11 @@ public class AlertController {
 		return responseEntity;
 	}
 	
+	@ResponseBody
+	@RequestMapping(value = "/updateAlertConfig", method = RequestMethod.POST)
+	private ResponseEntity updateAlertConfig(@RequestBody List<MapDTO> mapDTOs) {
+		ResponseEntity responseEntity = alertBO.updateAlertConfig(mapDTOs);
+		return responseEntity;
+	}
 	
 }
