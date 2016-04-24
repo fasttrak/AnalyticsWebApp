@@ -34,9 +34,9 @@ public class AlertBO {
 		try{
 			Set<String> validColumnNames=new HashSet<String>();
 			validColumnNames.add("type");
-			validColumnNames.add("message");
+			validColumnNames.add("ip");
+			validColumnNames.add("value");
 			validColumnNames.add("description");
-			validColumnNames.add("createDateTime");
 			validColumnNames.add("assignedTo");
 			responsePaginationDTO=alertDAO.getAllAlerts(paginationDTO, validColumnNames);
 		}catch(Exception e){
@@ -88,8 +88,7 @@ public class AlertBO {
 	}
 	
 	private void updateThresholds(Integer cpu, Integer memeory) {
-
-        
+		
     }
 	
 }

@@ -1,5 +1,7 @@
 package com.webapp.dao;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +36,11 @@ public class AlertDAO {
 		try{
 		    responsePaginationDTO=new PaginationDTO();
 		    List<Alert> alerts=getPaginationAlerts(paginationDTO, validColumnNames);
+		    for(Alert alert:alerts){
+		    	Calendar calendar=Calendar.getInstance();
+		    	calendar.set(alert.getYear(), alert.getMonth()-1, alert.getDay(), alert.getHour(), alert.getMinute(), alert.getSecond());
+		    	alert.setCreateDateTime(calendar.getTime());
+		    }
 		    responsePaginationDTO.setData(alerts);
 		    long totalRecords=getPaginationAlertsCount(paginationDTO, validColumnNames);
 		    responsePaginationDTO.setTotalRecords(totalRecords);
@@ -67,9 +74,15 @@ public class AlertDAO {
 					}
 				}
 			}
+			query.with(new Sort(new Order(Direction.DESC, "id")));
 			query.skip((paginationDTO.getPage()-1)*paginationDTO.getSize());
 		    query.limit(paginationDTO.getSize());
 		    alerts = mongoTemplate.find(query, Alert.class);
+		    for(Alert alert:alerts){
+		    	Calendar calendar=Calendar.getInstance();
+		    	calendar.set(alert.getYear(), alert.getMonth()-1, alert.getDay(), alert.getHour(), alert.getMinute(), alert.getSecond());
+		    	alert.setCreateDateTime(calendar.getTime());
+		    }
 		}catch(Exception e){
 			throw e;
 		}
@@ -99,6 +112,9 @@ public class AlertDAO {
 		Alert alert=null;
 		try{
 			alert=alertRepository.findOne(alertId);
+			Calendar calendar=Calendar.getInstance();
+	    	calendar.set(alert.getYear(), alert.getMonth()-1, alert.getDay(), alert.getHour(), alert.getMinute(), alert.getSecond());
+	    	alert.setCreateDateTime(calendar.getTime());
 		}catch(Exception e){
 			throw e;
 		}
@@ -113,8 +129,14 @@ public class AlertDAO {
 			alert.setAssignedTo(reqAlert.getAssignedTo());
 			if(reqAlert.getAlertUpdateMessages().size()>0){
 				AlertUpdateMessage alertUpdateMessage=reqAlert.getAlertUpdateMessages().get(0);
-				alertUpdateMessage.setUpdateDateTime(new Date());
-				alert.getAlertUpdateMessages().add(alertUpdateMessage);
+				if(alertUpdateMessage.getUpdateMessage()!=null && !alertUpdateMessage.getUpdateMessage().isEmpty()){
+					alertUpdateMessage.setUpdateDateTime(new Date());
+					if(alert.getAlertUpdateMessages()==null){
+						alert.setAlertUpdateMessages(new ArrayList<AlertUpdateMessage>());
+					}
+					alert.getAlertUpdateMessages().add(alertUpdateMessage);
+				}
+				alert.setDescription(reqAlert.getDescription());
 				alertRepository.save(alert);
 			}
 		}catch(Exception e){

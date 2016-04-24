@@ -18,7 +18,7 @@ angular.module('analyticApp').controller('LoginController',
 		 var response = $http.post("../../webapp/user/login", data, {});
 		 response.success(function(data, status, headers, config) {
 			    console.log(data);
-				$state.go('dashboard.home', {user:data});
+				$state.go('dashboard.realtime', {user:data});
 				return data;
 		 });
 		 response.error(function(data, status, headers, config) {

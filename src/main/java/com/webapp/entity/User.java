@@ -111,5 +111,39 @@ public class User {
 		this.oldPassword = oldPassword;
 	}
 
-	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj==null){
+			return false;
+		}
+		if(!(obj instanceof User)){
+			return false;
+		}
+		if(this==obj){
+			return true;
+		}
+		User user=(User)obj;
+		if(!this.username.equals(user.username)){
+			return false;
+		}
+		if(!this.password.equals(user.password)){
+			return false;
+		}
+		if(!this.name.equals(user.name)){
+			return false;
+		}
+		if(!this.imagePath.equals(user.imagePath)){
+			return false;
+		}
+		if(!this.id.equals(user.id)){
+			return false;
+		}
+		if(!this.position.equals(user.position)){
+			return false;
+		}
+		if(!this.role.equals(user.role)){
+			return false;
+		}
+		return true;
+	}
 }

@@ -61,6 +61,7 @@ public class UserDAO {
 	public User addUser(User user)throws Exception{
 		User updatedUser=null;
 		try{
+			user.setImagePath("https://cdn1.iconfinder.com/data/icons/user-pictures/100/male3-512.png");
 			updatedUser=userRepository.save(user);
 		}catch(Exception e){
 			throw e;

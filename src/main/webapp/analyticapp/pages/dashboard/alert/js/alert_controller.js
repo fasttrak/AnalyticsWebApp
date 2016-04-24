@@ -19,10 +19,12 @@ angular.module('analyticApp').controller('AlertController',
 	function defineAlertTable(){
 		$scope.alertTable={};
 		$scope.alertTable.cols = [
-		             { field: "type",  objField:"type", title: "Type", show: true, filter: {type: 'text'}, sortable: "type", width: '20%' },
-		             { field: "assignedTo",  objField:"assignedTo", title: "Assigned to", show: true, filter: {assignedTo: 'text'}, sortable: "assignedTo", width: '20%' },
+		             { field: "type",  objField:"type", title: "Type", show: true, filter: {type: 'text'}, sortable: "type", width: '15%' },
+		             { field: "ip",  objField:"ip", title: "Host", show: true, filter: {ip: 'text'}, sortable: "ip", width: '10%' },
+		             { field: "value",  objField:"value", title: "Value", show: true, filter: {value: 'text'}, sortable: "value", width: '20%' },
+		             { field: "assignedTo",  objField:"assignedTo", title: "Assigned to", show: true, filter: {assignedTo: 'text'}, sortable: "assignedTo", width: '15%' },
 		             { field: "description",  objField:"description", title: "Description", show: true, filter: {description: 'text'}, sortable: "description", width: '20%' },
-		             { field: "createDateTime", objField:"createDateTime", title: "Detected On", show: true, sortable: "createDateTime", width: '15%'  },
+		             { field: "createDateTime", objField:"createDateTime", title: "Detected On", show: true, width: '15%'  },
 		             { title: "Action", show: true, width: '5%'  }
 		           ];
 		$scope.alertTable.tableParams = new NgTableParams({
@@ -66,6 +68,7 @@ angular.module('analyticApp').controller('AlertController',
 			    $scope.alertToUpdate=data;
 			    $scope.alertDataToSave={id:$scope.alertToUpdate.id, alertUpdateMessages:[{updatedByUser:$scope.user}]};
 			    $scope.alertDataToSave.assignedTo=data.assignedTo;
+			    $scope.alertDataToSave.description=data.description;
 			    $scope.typeaheadAssignedTo=data.assignedTo;
 			    return data;
 			});

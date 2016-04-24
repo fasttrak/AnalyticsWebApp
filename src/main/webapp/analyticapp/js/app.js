@@ -82,6 +82,25 @@ angular
         }
       })
       
+      .state('dashboard.realtime',{
+        url:'/realtime',
+        controller: 'RealTimeController',
+        templateUrl:'pages/dashboard/real_time_analytics/real_time_analytics.html',
+        params: {
+            user: null
+        },
+        resolve: {
+          loadMyFiles:function($ocLazyLoad) {
+            return $ocLazyLoad.load({
+              name:'analyticApp',
+              files:[
+              'pages/dashboard/real_time_analytics/js/real_time_analytics_controller.js',
+              ]
+            })
+          }
+        }
+      })
+      
       .state('dashboard.analytics',{
         url:'/analytics',
         controller: 'AnalyticsController',
