@@ -124,7 +124,8 @@ public class UserIT {
 		reqUser.setName("newadminname");
 		reqUser.setRole("newadminrole");
 		reqUser.setPosition("newposition");
-		ResponseEntity<User> response=restTemplate.postForEntity("http://localhost:8083/webapp/user/addUser", reqUser, User.class, Collections.EMPTY_MAP);
+		ResponseEntity<User> response=restTemplate.postForEntity("http://localhost:8083/webapp/user/addUser", 
+				reqUser, User.class, Collections.EMPTY_MAP);
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 		assertNotNull(response);
 		Object responseBody = response.getBody();
@@ -136,7 +137,8 @@ public class UserIT {
 		User responseUser=(User)users.get(0);
 		assertEquals("newusername", responseUser.getUsername());
 		assertEquals("newadminname", responseUser.getName());
-		assertEquals("https://cdn1.iconfinder.com/data/icons/user-pictures/100/male3-512.png", responseUser.getImagePath());
+		assertEquals("https://cdn1.iconfinder.com/data/icons/user-pictures/100/male3-512.png", 
+				responseUser.getImagePath());
 		assertEquals("newadminrole", responseUser.getRole());
 		assertEquals("newposition", responseUser.getPosition());
 	}

@@ -86,12 +86,6 @@ public class UserDAOTest {
         assertEquals(responseUser, dbUser);
     }
 	
-	@Test(expected=Exception.class)
-    public void testTwoAddUser() throws Exception{
-        when(userRepositoryMock.save(any(User.class))).thenReturn(null);
-        User responseUser=userDAO.addUser(null);
-    }
-	
 	@Test
     public void testDeleteUser() throws Exception{
 		User dbUser=getUserObject();
@@ -123,6 +117,12 @@ public class UserDAOTest {
 		reqUser.setPassword("abcd");
 		boolean result=userDAO.changeUserPassword(reqUser, 123);
         assertEquals(true, result);
+    }
+	
+	@Test(expected=Exception.class)
+    public void testTwoAddUser() throws Exception{
+        when(userRepositoryMock.save(any(User.class))).thenReturn(null);
+        User responseUser=userDAO.addUser(null);
     }
 	
 	@Test(expected=Exception.class)
