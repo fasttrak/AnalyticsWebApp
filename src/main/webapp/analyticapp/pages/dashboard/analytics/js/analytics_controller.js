@@ -34,10 +34,16 @@ angular.module('analyticApp').controller('AnalyticsController',
 				 currentDate.setDate(currentDate.getDate() + noToAdd); 
 				 nextTimeSlots.push($filter('date')(currentDate, "MM/dd/yyyy 'at' h:mma"));
 			 }
-		 }else{
+		 }else if(parameter=='hour'){
 			 //hour
 			 for(var i=1; i<=noOfSlots; i++){
 				 currentDate.setHours(currentDate.getHours() + noToAdd); 
+				 nextTimeSlots.push($filter('date')(currentDate, "MM/dd/yyyy 'at' h:mma"));
+			 }
+		 }else if(parameter=='minute'){
+			 //minute
+			 for(var i=1; i<=noOfSlots; i++){
+				 currentDate.setMinutes(currentDate.getMinutes() + noToAdd); 
 				 nextTimeSlots.push($filter('date')(currentDate, "MM/dd/yyyy 'at' h:mma"));
 			 }
 		 }
@@ -45,15 +51,19 @@ angular.module('analyticApp').controller('AnalyticsController',
 		 return nextTimeSlots;
 	 }
 	
-	 function getDataSeries(noOfSlots, name, interceptString, slopeString, hostString, analyticsDataToSeach){
+	 function getDataSeries(noOfSlots, name, interceptString, slopeString, hostString, analyticsDataToSeach, stdDevString, meanValString){
 		 var seriesData=null;
 		 for(var i=0; i<analyticsDataToSeach.length; i++){
-			 if(analyticsDataToSeach[i].ip==hostString){
+			 if(analyticsDataToSeach[i].id==hostString){
 				 var c=analyticsDataToSeach[i][interceptString];
 				 var m=analyticsDataToSeach[i][slopeString];
+				 var stdDev=analyticsDataToSeach[i][stdDevString];
+				 var meanVal=analyticsDataToSeach[i][meanValString];
 				 var dataList=[];
 				 for(var x=1; x<=noOfSlots; x++){
-					 var yResult=(m*x)+c;
+					 //var yResult=(m*x)+c;
+					 var norm=(x-meanVal)/stdDev;
+					 var yResult=c+(norm*x);
 					 dataList.push(yResult);
 				 }
 				 seriesData={name:name, data:dataList};
@@ -72,11 +82,12 @@ angular.module('analyticApp').controller('AnalyticsController',
 			$scope.analytics.selectedHost='all';
 			for(var i=0; i<$scope.analytics.length; i++){
 				 var analytic=$scope.analytics[i];
-				 $scope.hostsOptions.push({value: analytic.ip, displayName: analytic.ip});
+				 $scope.hostsOptions.push({value: analytic.id, displayName: analytic.id});
 			}
-			$scope.timeframeOptions=[{value:'one_hour', displayName:'One Hour'}
-				                     	,{value:'one_day', displayName:'One Day'}
-				                     	/*,{value:'one_month', displayName:'One Month'}*/];
+			$scope.timeframeOptions=[   ,{value:'one_minute', displayName:'One Minute'}
+			                         	,{value:'one_hour', displayName:'One Hour'}
+										/*,{value:'one_day', displayName:'One Day'}
+				                     	,{value:'one_month', displayName:'One Month'}*/];
 			$scope.analytics.selectedTimeFrame='one_hour';	
 			var nextTimeSlots=getNextTimeSlots(10, 1, 'hour');
 			var dataSeriesList=[];
@@ -84,8 +95,8 @@ angular.module('analyticApp').controller('AnalyticsController',
 				if($scope.hostsOptions[i].value=='all'){
 					continue;
 				}
-				var dataSeriesObj=getDataSeries(10, $scope.hostsOptions[i].value, 'oneHourCPUAnalyticsIntercept', 'oneHourCPUAnalyticsSlope', 
-						$scope.hostsOptions[i].value,$scope.analytics);
+				var dataSeriesObj=getDataSeries(10, $scope.hostsOptions[i].value, 'intercept', 'hour', 
+						$scope.hostsOptions[i].value,$scope.analytics, 'hourStd', 'hourMean');
 				dataSeriesList.push(dataSeriesObj);
 			}
 			configureLineGraph('CPU Analytics', nextTimeSlots, 'CPU Utilization', '(%)', dataSeriesList);
@@ -131,14 +142,18 @@ angular.module('analyticApp').controller('AnalyticsController',
 	 $scope.onClickVisualize=function(){
 		 var interceptString=null;
 		 var slopeString=null;
+		 var stdDevString=null;
+		 var meanString=null;
 		 var noToAdd=1;
 		 var parameter='hour';
 		 if($scope.analytics.selectedAnalyticsType=='cpu_utilization'){
 			 if($scope.analytics.selectedTimeFrame=='one_hour'){
 				 noToAdd=1;
 				 parameter='hour';
-				 interceptString='oneHourCPUAnalyticsIntercept';
-				 slopeString='oneHourCPUAnalyticsSlope';
+				 interceptString='intercept';
+				 slopeString='hour';
+				 stdDevString='hourStd';
+				 meanString='hourMean';
 			 }else if($scope.analytics.selectedTimeFrame=='one_day'){
 				 noToAdd=1;
 				 parameter='day';
@@ -146,9 +161,16 @@ angular.module('analyticApp').controller('AnalyticsController',
 				 slopeString='oneDayCPUAnalyticsSlope';
 			 }else if($scope.analytics.selectedTimeFrame=='one_month'){
 				 noToAdd=30;
-				 parameter='day';
+				 parameter='month';
 				 interceptString='oneMonthCPUAnalyticsIntercept';
 				 slopeString='oneMonthCPUAnalyticsSlope';
+			 }else if($scope.analytics.selectedTimeFrame=='one_minute'){
+				 noToAdd=1;
+				 parameter='minute';
+				 interceptString='intercept';
+				 slopeString='min';
+				 stdDevString='minuteStd';
+				 meanString='minuteMean';
 			 }
 		 }else if($scope.analytics.selectedAnalyticsType=='memory_utilization'){
 			 if($scope.analytics.selectedTimeFrame=='one_hour'){
@@ -175,14 +197,14 @@ angular.module('analyticApp').controller('AnalyticsController',
 						continue;
 					}
 					var dataSeriesObj=getDataSeries(10, $scope.hostsOptions[i].value, interceptString, slopeString, 
-							$scope.hostsOptions[i].value,$scope.analytics);
+							$scope.hostsOptions[i].value,$scope.analytics, stdDevString, meanString);
 					dataSeriesList.push(dataSeriesObj);
 				}
 		 }else{
 			 for(var i=0; i<$scope.hostsOptions.length; i++){
 					if($scope.hostsOptions[i].value==$scope.analytics.selectedHost){
 						var dataSeriesObj=getDataSeries(10, $scope.hostsOptions[i].value, interceptString, slopeString, 
-								$scope.hostsOptions[i].value,$scope.analytics);
+								$scope.hostsOptions[i].value,$scope.analytics, stdDevString, meanString);
 						dataSeriesList.push(dataSeriesObj);
 					}
 			}

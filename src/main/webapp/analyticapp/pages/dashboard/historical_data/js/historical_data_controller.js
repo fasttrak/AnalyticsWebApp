@@ -34,7 +34,7 @@ angular.module('analyticApp').controller('HistoricalDataController',
 		//$scope.hostsOptions.push({value: 'all', displayName: 'All Hosts'});
 		for(var i=0; i<$scope.analytics.length; i++){
 			 var analytic=$scope.analytics[i];
-			 $scope.hostsOptions.push({value: analytic.ip, displayName: analytic.ip});
+			 $scope.hostsOptions.push({value: analytic.id, displayName: analytic.id});
 		}
 		$scope.timeframeOptions=[{value:'one_hour', displayName:'One Hour'}
 			                     	,{value:'one_day', displayName:'One Day'}

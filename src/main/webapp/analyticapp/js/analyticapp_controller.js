@@ -25,7 +25,7 @@ analyticapp.config(function($stateProvider, $urlRouterProvider) {
         
         .state('login', {
             url: '/login',
-            templateUrl: 'pages/login/login.html',
+            templateUrl: 'pages/login/login2.html',
             controller:'loginController'
         })
         
